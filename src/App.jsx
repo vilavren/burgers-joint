@@ -1,11 +1,17 @@
+import { Catalog } from './components/Catalog'
 import { Header } from './components/Header'
-import { Container } from './components/Container'
+import { Navigation } from './components/Navigation'
 
 export const App = () => {
   return (
     <>
       <Header />
-      <Container />
+      <main>
+        <Navigation />
+        <Catalog />
+        <section></section>
+      </main>
+      <footer></footer>
     </>
   )
 }
