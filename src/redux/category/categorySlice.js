@@ -40,17 +40,18 @@ const categorySlice = createSlice({
 
   // НОВОЕ RTK 2.0
   extraReducers: (builder) => {
-    builder.addCase(fetchCategory.pending, (state) => {
-      state.status = 'loading'
-    })
-    builder.addCase(fetchCategory.fulfilled, (state, action) => {
-      state.status = 'loaded'
-      state.category = action.payload
-    })
-    builder.addCase(fetchCategory.rejected, (state) => {
-      state.status = 'error'
-      state.category = []
-    })
+    builder
+      .addCase(fetchCategory.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchCategory.fulfilled, (state, action) => {
+        state.status = 'loaded'
+        state.category = action.payload
+      })
+      .addCase(fetchCategory.rejected, (state) => {
+        state.status = 'error'
+        state.category = []
+      })
   },
 })
 
