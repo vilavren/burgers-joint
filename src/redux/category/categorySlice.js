@@ -2,11 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const fetchCategory = createAsyncThunk('category/fetch', async () => {
-  console.log(process.env.REACT_APP_API_URI)
   const { data } = await axios.get(
-    `${process.env.REACT_APP_API_URI}${process.env.REACT_APP_POSTFIX}/category`
+    `${import.meta.env.VITE_API_URI}${import.meta.env.VITE_POSTFIX}/category`
   )
-  console.log(data)
   return data
 })
 
