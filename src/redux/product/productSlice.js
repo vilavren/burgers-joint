@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 export const fetchProduct = createAsyncThunk(
   'product/fetch',
@@ -6,7 +7,7 @@ export const fetchProduct = createAsyncThunk(
     const { data } = await axios.get(
       `${import.meta.env.VITE_API_URI}${
         import.meta.env.VITE_POSTFIX
-      }$category=${category}`
+      }?category=${category}`
     )
     return data
   }
@@ -14,19 +15,20 @@ export const fetchProduct = createAsyncThunk(
 
 const initialState = {
   product: [],
-  status: '',
+  status: 'loading',
 }
 
 const productSlice = createSlice({
   name: 'product',
   initialState,
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchProduct.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(fetchCategory.fulfilled, (state, action) => {
-        state.status = 'loaded'
+      .addCase(fetchProduct.fulfilled, (state, action) => {
+        state.status = 'success'
         state.product = action.payload
       })
       .addCase(fetchProduct.rejected, (state) => {

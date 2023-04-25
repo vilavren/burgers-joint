@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CatalogProduct } from '../CatalogProduct'
 import { Container } from '../Container'
 import { Order } from '../Order'
 import style from './Catalog.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProduct } from '../../redux/product/productSlice'
 
 export const Catalog = () => {
-  const goodsList = [
-    { title: 'Мясная бомба' },
-    { title: 'Супер сырный' },
-    { title: 'Сытный' },
-    { title: 'Итальянский' },
-    { title: 'Вечная классика' },
-    { title: 'Тяжелый удар' },
-  ]
+  const dispatch = useDispatch()
+  const { category, activeCategory } = useSelector((state) => state.category)
+  const { product, status } = useSelector((state) => state.product)
+
+  const isProductLoading = status === 'success'
+
+  useEffect(() => {
+    if (category.length) {
+      dispatch(fetchProduct(category[activeCategory].title))
+    }
+  }, [category, activeCategory])
 
   return (
     <section className={style.catalog}>
@@ -24,9 +29,11 @@ export const Catalog = () => {
 
           <div className={style.wrap_list}>
             <ul className={style.list}>
-              {goodsList.map((item) => (
-                <CatalogProduct key={item.title} item={item} />
-              ))}
+              {isProductLoading
+                ? product.map((item) => (
+                    <CatalogProduct key={item.title} item={item} />
+                  ))
+                : ''}
             </ul>
           </div>
         </div>

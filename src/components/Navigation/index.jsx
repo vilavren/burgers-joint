@@ -13,7 +13,7 @@ export const Navigation = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchCategory('max'))
+    dispatch(fetchCategory())
   }, [])
 
   return (

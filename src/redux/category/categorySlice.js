@@ -10,7 +10,7 @@ export const fetchCategory = createAsyncThunk('category/fetch', async () => {
 
 const initialState = {
   category: [],
-  status: '',
+  status: 'loading',
   activeCategory: 0,
 }
 
@@ -23,29 +23,13 @@ const categorySlice = createSlice({
     },
   },
 
-  // СТАРОЕ
-  // extraReducers: {
-  //   [fetchCategory.pending]: (state) => {
-  //     state.status = 'loading'
-  //   },
-  //   [fetchCategory.fulfilled]: (state, action) => {
-  //     state.category = action.payload
-  //     state.status = 'loaded'
-  //   },
-  //   [fetchCategory.rejected]: (state) => {
-  //     state.category = []
-  //     state.status = 'error'
-  //   },
-  // },
-
-  // НОВОЕ RTK 2.0
   extraReducers: (builder) => {
     builder
       .addCase(fetchCategory.pending, (state) => {
         state.status = 'loading'
       })
       .addCase(fetchCategory.fulfilled, (state, action) => {
-        state.status = 'loaded'
+        state.status = 'success'
         state.category = action.payload
       })
       .addCase(fetchCategory.rejected, (state) => {
