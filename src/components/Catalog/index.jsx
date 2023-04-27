@@ -25,7 +25,9 @@ export const Catalog = () => {
         <Order />
 
         <div className={style.wrapper}>
-          <h2 className={style.title}>Бургеры</h2>
+          <h2 className={style.title}>
+            {category.length ? category[activeCategory].rus : ''}
+          </h2>
 
           <div className={style.wrap_list}>
             <ul className={style.list}>

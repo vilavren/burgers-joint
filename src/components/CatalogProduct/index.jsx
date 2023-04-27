@@ -5,17 +5,22 @@ export const CatalogProduct = ({ item }) => {
   return (
     <li className={style.item}>
       <article className={style.product}>
-        <img src="img/photo-5.jpg" alt={item.title} className={style.image} />
+        <img
+          src={`${import.meta.env.VITE_API_URI}/${item.image}`}
+          alt={item.title}
+          className={style.image}
+        />
 
         <p className={style.price}>
-          689<span className="currency">₽</span>
+          {item.price}
+          <span className="currency">₽</span>
         </p>
 
         <h3 className={style.title}>
           <button className={style.detail}>{item.title}</button>
         </h3>
 
-        <p className={style.weight}>520г</p>
+        <p className={style.weight}>{`${item.weight} г.`}</p>
 
         <button className={style.add} type="button">
           Добавить
