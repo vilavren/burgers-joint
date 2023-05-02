@@ -1,18 +1,10 @@
 import React, { useState } from 'react'
 import style from './Count.module.css'
 
-export const Count = (props) => {
-  const [count, setCount] = useState(props.count)
+export const Count = ({ count, id }) => {
+  const addCount = () => {}
 
-  const addCount = () => {
-    setCount(count + 1)
-  }
-
-  const removeCount = () => {
-    if (count > 1) {
-      setCount(count - 1)
-    }
-  }
+  const removeCount = () => {}
 
   return (
     <div className={style.count}>

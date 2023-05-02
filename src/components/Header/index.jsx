@@ -1,17 +1,15 @@
 import React from 'react'
 import { Container } from '../Container'
 import style from './Header.module.css'
-import logo from '../../assets/img/logo.svg'
 
 export const Header = () => {
   return (
     <header className={style.header}>
       <Container className={style.container}>
-        <img className={style.logo} src={logo} alt="Логотип Burgers Joint" />
-
         <div className={style.wrapper}>
           <h1 className={style.title}>
-            <span>Только самые</span>
+            <span>Burgers Joint</span>
+            <span className={style.red}>Только самые</span>
             <span className={style.red}>сочные бургеры!</span>
           </h1>
 

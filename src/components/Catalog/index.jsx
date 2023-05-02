@@ -31,11 +31,19 @@ export const Catalog = () => {
 
           <div className={style.wrap_list}>
             <ul className={style.list}>
-              {isProductLoading
-                ? product.map((item) => (
+              {isProductLoading ? (
+                product.length ? (
+                  product.map((item) => (
                     <CatalogProduct key={item.title} item={item} />
                   ))
-                : ''}
+                ) : (
+                  <p className={style.empty}>
+                    К сожалению товаров данной категории нет
+                  </p>
+                )
+              ) : (
+                ''
+              )}
             </ul>
           </div>
         </div>
