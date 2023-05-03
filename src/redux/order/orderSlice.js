@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { calcTotalCount, calcTotalPrice } from '../../utils/calcTotal'
 
 const initialState = {
   orderList: JSON.parse(localStorage.getItem('order') || '[]'),
@@ -39,14 +40,41 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     addProduct: (state, action) => {
-      const product = state.orderList.find(
+      const productOrderList = state.orderList.find(
         (item) => item.id === action.payload.id
       )
 
-      if (product) {
-        product.count += 1
+      if (productOrderList) {
+        productOrderList.count += 1
+
+        const productOrderGoods = state.orderGoods.find(
+          (item) => item.id === action.payload.id
+        )
+        productOrderGoods.count = productOrderList.count
+        state.totalCount = calcTotalCount(state.orderGoods)
+        state.totalPrice = calcTotalPrice(state.orderGoods)
       } else {
         state.orderList.push({ ...action.payload, count: 1 })
+      }
+    },
+    removeProduct: (state, action) => {
+      const productOrderList = state.orderList.find(
+        (item) => item.id === action.payload.id
+      )
+
+      if (productOrderList.count > 1) {
+        productOrderList.count -= 1
+
+        const productOrderGoods = state.orderGoods.find(
+          (item) => item.id === action.payload.id
+        )
+        productOrderGoods.count = productOrderList.count
+        state.totalCount = calcTotalCount(state.orderGoods)
+        state.totalPrice = calcTotalPrice(state.orderGoods)
+      } else {
+        state.orderList = state.orderList.filter(
+          (item) => item.id !== action.payload.id
+        )
       }
     },
   },
@@ -55,26 +83,21 @@ const orderSlice = createSlice({
       .addCase(fetchOrder.pending, (state) => {
         state.status = 'loading'
       })
+
       .addCase(fetchOrder.fulfilled, (state, action) => {
         const orderGoods = state.orderList.map((item) => {
           const product = action.payload.find(
             (product) => product.id === item.id
           )
-
           product.count = item.count
-
           return product
         })
         state.status = 'success'
         state.orderGoods = orderGoods
-        state.totalPrice = orderGoods.reduce((acc, item) => {
-          acc + item.count, 0
-        })
-        state.totalCount = orderGoods.reduce(
-          (acc, item) => acc + item.count * item.price,
-          0
-        )
+        state.totalCount = calcTotalCount(orderGoods)
+        state.totalPrice = calcTotalPrice(orderGoods)
       })
+
       .addCase(fetchOrder.rejected, (state) => {
         state.status = 'error'
         state.orderGoods = []
@@ -82,5 +105,5 @@ const orderSlice = createSlice({
   },
 })
 
-export const { addProduct } = orderSlice.actions
+export const { addProduct, removeProduct } = orderSlice.actions
 export default orderSlice.reducer
