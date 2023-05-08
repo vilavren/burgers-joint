@@ -3,10 +3,21 @@ import style from './ModalDelivery.module.css'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal } from '../../redux/modalDelivery/modalDeliverySlice'
+import { updateFormValue } from '../../redux/formSlice/formSlice'
 
 export const ModalDelivery = () => {
   const { isOpen } = useSelector((state) => state.modalDelivery)
+  const form = useSelector((state) => state.form)
   const dispatch = useDispatch()
+
+  const handleInputchange = (event) => {
+    dispatch(
+      updateFormValue({
+        field: event.target.name,
+        value: event.target.value,
+      })
+    )
+  }
 
   return (
     isOpen && (
@@ -28,12 +39,16 @@ export const ModalDelivery = () => {
                   className={style.input}
                   type="text"
                   name="name"
+                  value={form.name}
+                  onChange={handleInputchange}
                   placeholder="Ваше имя"
                 />
                 <input
                   className={style.input}
                   type="tel"
                   name="phone"
+                  value={form.phone}
+                  onChange={handleInputchange}
                   placeholder="Телефон"
                 />
               </fieldset>
@@ -45,6 +60,8 @@ export const ModalDelivery = () => {
                     type="radio"
                     name="format"
                     value="pickup"
+                    checked={form.format === 'pickup'}
+                    onChange={handleInputchange}
                   />
                   <span>Самовывоз</span>
                 </label>
@@ -55,7 +72,8 @@ export const ModalDelivery = () => {
                     type="radio"
                     name="format"
                     value="delivery"
-                    checked
+                    checked={form.format === 'delivery'}
+                    onChange={handleInputchange}
                   />
                   <span>Доставка</span>
                 </label>
@@ -66,18 +84,24 @@ export const ModalDelivery = () => {
                   className={style.input}
                   type="text"
                   name="address"
+                  value={form.address}
+                  onChange={handleInputchange}
                   placeholder="Улица, дом, квартира"
                 />
                 <input
                   className={classNames(style.input, style.input_half)}
                   type="number"
                   name="floor"
+                  value={form.floor}
+                  onChange={handleInputchange}
                   placeholder="Этаж"
                 />
                 <input
                   className={classNames(style.input, style.input_half)}
                   type="number"
                   name="intercom"
+                  value={form.intercom}
+                  onChange={handleInputchange}
                   placeholder="Домофон"
                 />
               </fieldset>
