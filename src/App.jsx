@@ -3,6 +3,7 @@ import { Catalog } from './components/Catalog'
 import { Header } from './components/Header'
 import { Navigation } from './components/Navigation'
 import { store } from './redux/store'
+import { ModalDelivery } from './components'
 
 export const App = () => {
   return (
@@ -14,6 +15,7 @@ export const App = () => {
         <section></section>
       </main>
       <footer></footer>
+      <ModalDelivery />
     </Provider>
   )
 }

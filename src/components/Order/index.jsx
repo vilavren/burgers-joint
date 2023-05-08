@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { OrderGoods } from '../OrderGoods'
 import { fetchOrder } from '../../redux/order/orderSlice'
 import style from './Order.module.css'
+import { openModal } from '../../redux/modalDelivery/modalDeliverySlice'
 
 export const Order = () => {
   const dispatch = useDispatch()
@@ -35,7 +36,15 @@ export const Order = () => {
               <span className="currency">&nbsp;₽</span>
             </p>
           </div>
-          <button className={style.submit}>Оформить заказ</button>
+          <button
+            className={style.submit}
+            disabled={orderGoods.length === 0}
+            onClick={() => {
+              dispatch(openModal())
+            }}
+          >
+            Оформить заказ
+          </button>
           <div className={style.apeal}>
             <p className={style.text}>Бесплатная доставка</p>
             <button className={style.close}>Свернуть</button>
