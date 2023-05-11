@@ -3,11 +3,13 @@ import style from './ModalDelivery.module.css'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal } from '../../redux/modalDelivery/modalDeliverySlice'
-import { updateFormValue } from '../../redux/formSlice/formSlice'
+import { submitForm, updateFormValue } from '../../redux/formSlice/formSlice'
 
 export const ModalDelivery = () => {
   const { isOpen } = useSelector((state) => state.modalDelivery)
   const form = useSelector((state) => state.form)
+  const { orderList } = useSelector((state) => state.order)
+
   const dispatch = useDispatch()
 
   const handleInputchange = (event) => {
@@ -15,6 +17,16 @@ export const ModalDelivery = () => {
       updateFormValue({
         field: event.target.name,
         value: event.target.value,
+      })
+    )
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    dispatch(
+      submitForm({
+        ...form,
+        orderList,
       })
     )
   }
@@ -33,7 +45,7 @@ export const ModalDelivery = () => {
           <div className={style.container}>
             <h2 className={style.title}>Доставка</h2>
 
-            <form className={style.form} id="delivery">
+            <form className={style.form} id="delivery" onSubmit={handleSubmit}>
               <fieldset className={style.fieldset}>
                 <input
                   className={style.input}
