@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 
 import style from './ModalDelivery.module.css'
-import { submitForm, updateFormValue } from '../../redux/formSlice/formSlice'
+import { submitForm, updateFormValue } from '../../redux/form/formSlice'
 import { closeModal } from '../../redux/modalDelivery/modalDeliverySlice'
 
 export const ModalDelivery = () => {
